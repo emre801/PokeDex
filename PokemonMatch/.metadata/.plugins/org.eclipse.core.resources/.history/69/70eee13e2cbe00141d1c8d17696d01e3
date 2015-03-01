@@ -1,0 +1,16 @@
+package com.johnerdo.battle;
+
+import java.util.LinkedList;
+import com.johnerdo.imageCompare.*;
+
+public class Battle {
+
+	LinkedList<String> pokemonOnScreen;
+	public Battle(){
+		
+	}
+	public void setUp(){
+		this.pokemonOnScreen = MatchingMethod.getPokemonNamesOnScreen()
+	}
+	
+}

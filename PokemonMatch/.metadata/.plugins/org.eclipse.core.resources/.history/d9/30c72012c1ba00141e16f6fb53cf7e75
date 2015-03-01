@@ -1,0 +1,71 @@
+import java.io.*;
+import javax.sound.sampled.*;
+ 
+public class RecordAudio {
+ 
+	private ByteArrayOutputStream out;
+    public static void main(String[] args) {
+ 
+        ByteArrayOutputStream byteArrayOutputStream;
+        TargetDataLine targetDataLine;
+        int cnt;
+        boolean stopCapture = false;
+        byte tempBuffer[] = new byte[8000];
+        int countzero, countdownTimer;    
+        short convert[] = new short[tempBuffer.length];
+ 
+ 
+ 
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            stopCapture = false;
+            countdownTimer = 0;
+            while (!stopCapture) {
+                AudioFormat audioFormat = new AudioFormat(44100.0F, 16, 1, true, false);
+                DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
+                targetDataLine = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
+                targetDataLine.open(audioFormat);
+                targetDataLine.start();
+                cnt = targetDataLine.read(tempBuffer, 0, tempBuffer.length);
+                byteArrayOutputStream.write(tempBuffer, 0, cnt); 
+                try {
+                    countzero = 0;
+                    for (int i = 0; i < tempBuffer.length; i++) {                                     
+                        convert[i] = tempBuffer[i];
+                        if (convert[i] == 0) {
+                            countzero++;
+                        }
+                    }
+                     
+                    countdownTimer++;
+                    System.out.println(countzero + " " + countdownTimer);
+ 
+                } catch (StringIndexOutOfBoundsException e) {
+                    System.out.println(e.getMessage());
+                }
+                Thread.sleep(0);
+                targetDataLine.close();
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    
+    public File getAudioFile() {
+        byte[] audio = out.toByteArray();
+        InputStream input = new ByteArrayInputStream(audio);
+        try {
+
+            final AudioFormat format = getFormat();
+            final AudioInputStream ais =
+                    new AudioInputStream(input, format,
+                            audio.length / format.getFrameSize());
+            AudioSystem.write(ais, AudioFileFormat.Type.WAVE, new File("temp.wav"));
+            input.close();
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return new File("temp.wav");
+    }
+}

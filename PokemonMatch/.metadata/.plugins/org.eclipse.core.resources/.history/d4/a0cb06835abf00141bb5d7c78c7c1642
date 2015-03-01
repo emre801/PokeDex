@@ -1,0 +1,34 @@
+package com.johnerdo.battle;
+
+import java.util.LinkedList;
+
+import org.johnerdo.globalInfo.PokemonList;
+
+import tester.TestPokemon;
+
+import com.johnerdo.imageCompare.*;
+
+public class Battle {
+
+	LinkedList<String> pokemonOnScreen;
+	public Battle(){
+		RobotBot.Screen();
+		PokemonList.setMapping();
+		setUp();
+		printPokemon();
+		
+	}
+	public void setUp(){
+		this.pokemonOnScreen = MatchingMethod.getPokemonNamesOnScreen();
+	}
+	public void printPokemon(){
+		for(String name: pokemonOnScreen)
+			System.out.println(name);
+		System.out.println("OMG");
+		MatchingMethod.copyGifs(pokemonOnScreen);
+	}
+	public static void main(String[] args){
+		new Battle();
+		//TestPokemon.main(args);
+	}
+}
