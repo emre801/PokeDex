@@ -1,7 +1,0 @@
-
-public class Derp {
-	public static void main(String[] args){
-		RecordAudio ra = new RecordAudio();
-	}
-
-}

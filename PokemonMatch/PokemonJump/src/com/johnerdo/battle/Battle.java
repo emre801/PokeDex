@@ -1,6 +1,5 @@
 package com.johnerdo.battle;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -26,7 +25,7 @@ public class Battle {
 		setUp();
 		printPokemon();
 	}
-	public void getHealth(boolean pushButton) throws InterruptedException{
+	public static void getHealth(boolean pushButton) throws InterruptedException{
 		if(pushButton){
 			RobotBot.Screen();
 			Thread.sleep(1500);
@@ -54,10 +53,8 @@ public class Battle {
 			System.out.println(PokemonList.printPokemonInfo(pok1, pok2));
 		}
 	}
-	public static void main(String[] args) throws InterruptedException, IOException{
-		new MatchingMethod().setupScreenInfoScreenShot();
+	public static void main(String[] args) throws InterruptedException{
 		Battle b = new Battle();
-		//b.getPokemonOnScreen(false);
-		b.getHealth(false);
+		b.getPokemonOnScreen(false);
 	}
 }

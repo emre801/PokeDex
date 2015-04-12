@@ -735,9 +735,11 @@ public class PokemonList {
 		 "rotom-mow",//726
 		 "thundurus-therian",
 		 "landorus-therian",//727
-		 "tornadus-therian",
-		 "kyurem-black",
-		 "kyurem-white"};
+		 "tornadus-therian",//728
+		 "kyurem-black",//729
+		 "kyurem-white",
+		 "",//730
+		 "keldeo-resolute"};//731
 	
 	public static HashMap<String, Integer> nameToDex = new HashMap<String,Integer>();
 	

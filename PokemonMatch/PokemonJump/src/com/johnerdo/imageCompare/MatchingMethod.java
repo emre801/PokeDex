@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Properties;
 
 import org.johnerdo.globalInfo.PokemonList;
 import org.opencv.core.Core;
@@ -30,20 +29,8 @@ public class MatchingMethod {
 	public static String resultInfo = "C:/Users/John/Desktop/ScreenInfo/Results/";
 	public static String pokemonInfo ="C:/Users/John/Desktop/PokemonInfo/";
 
-	public  void setupScreenInfoScreenShot() throws IOException{
-		Properties prop = new Properties();
-		String propFileName = "prop.properties";
+	public static void setupScreenInfoScreenShot(){
 		
-		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
-		if(inputStream != null){
-			prop.load(inputStream);
-		}else{
-			System.out.println("lol");
-		}
-		screenInfoScreenShot = prop.getProperty("screenInfoScreenShot");
-		screenInfoScreen = prop.getProperty("screenInfoScreen");
-		resultInfo = prop.getProperty("resultInfo");
-		pokemonInfo = prop.getProperty("pokemonInfo");
 	}
 	
 	public static LinkedList<Double> getHealthBars(){
@@ -156,7 +143,7 @@ public class MatchingMethod {
 	public static HashMap<Rect, Integer> getImageRect() {
 		int count = 1;
 		HashMap<Rect, Integer> pokemonMats = new HashMap<Rect, Integer>();
-		for (int j = 0; j < 28; j++) {
+		for (int j = 0; j < 29; j++) {
 			for (int i = -1; i < 25; i++) {
 				int x = 47 + (i * 38);
 				int y = 94 + (j * 38);
@@ -233,8 +220,10 @@ public class MatchingMethod {
 	public static LinkedList<Integer> getPokemonNumbersOnScreen() {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		LinkedList<Mat> pokemons = getScreenInfo();
+		System.out.println("Pokemon Info " + pokemons.size());
 		HashMap<Rect, Integer> squares = getImageRect();
 		LinkedList<Integer> pokemonName = new LinkedList<Integer>();
+		System.out.println(pokemonInfo +"/PokemonSprites.png");
 		Mat img = Highgui
 				.imread(pokemonInfo +"/PokemonSprites.png");
 		// int count = 1;
@@ -247,6 +236,7 @@ public class MatchingMethod {
 					// System.out.println("PokemonNumber = " +
 					// squares.get(rect));
 					Integer pokemon = squares.get(rect);
+					System.out.println(pokemon);
 					pokemonName.add(pokemon);
 					// System.out.println("Name  = " +
 					// PokemonList.pokemonNames[squares.get(rect) -1]);
@@ -434,12 +424,6 @@ public class MatchingMethod {
 		//System.out.println(getLatestScreenShot());
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		//getHealthBars();
-		try {
-			new MatchingMethod().setupScreenInfoScreenShot();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		//getImages();
+		getImages();
 	}
 }
